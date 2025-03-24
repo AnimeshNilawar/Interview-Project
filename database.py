@@ -1,12 +1,17 @@
 import psycopg2
 import pandas as pd
+import os
 
 DB_NAME = "postgres"
 DB_USER = "postgres"
 DB_PASS = "root"
-DB_HOST = "host.docker.internal"
 DB_PORT = "5432"
 CSV_FILE = "dataset/HINDALCO.csv"
+
+if os.path.exists("/.dockerenv"):
+    DB_HOST = "host.docker.internal"
+else:
+    DB_HOST = "localhost"
 
 def get_db_connection():
     return psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
